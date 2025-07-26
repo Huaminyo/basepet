@@ -1,0 +1,27 @@
+{
+  "name": "BasePets - Pixel Art NFT Collection",
+  "short_name": "BasePets",
+  "description": "Collect, trade, and play with unique pixel art pets on Base Network",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#0066FF",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["games", "entertainment", "finance"],
+  "lang": "en",
+  "dir": "ltr"
+}

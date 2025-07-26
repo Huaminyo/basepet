@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
-import { Heart, ShoppingCart, Dice6, ArrowLeft, ArrowRight, Calendar, Coins, Users, Target, Zap } from "lucide-react"
+import { Heart, Dice6, ArrowLeft, ArrowRight, Calendar, Coins, Users, Target, Zap } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -10,6 +10,7 @@ export default function BasePetsPixelLanding() {
   const [currentPet, setCurrentPet] = useState(0)
   const [isBlinking, setIsBlinking] = useState(true)
   const [glitchText, setGlitchText] = useState("BasePets")
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const pixelPets = [
     {
@@ -324,9 +325,46 @@ export default function BasePetsPixelLanding() {
         .pet-showcase {
           background: radial-gradient(circle at center, rgba(0, 102, 255, 0.1) 0%, transparent 70%);
         }
+
+        .touch-manipulation {
+          touch-action: manipulation;
+        }
+
+        @media (max-width: 768px) {
+          .pixel-button {
+            min-height: 44px;
+            min-width: 44px;
+          }
+          
+          .pixel-card {
+            margin-bottom: 1rem;
+          }
+          
+          .container {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+          
+          .text-content {
+            line-height: 1.6;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .pixel-perfect {
+            font-size: 10px;
+          }
+          
+          .neon-glow {
+            text-shadow: 
+              0 0 1px currentColor,
+              0 0 2px currentColor,
+              0 0 3px currentColor;
+          }
+        }
       `}</style>
 
-      {/* Pixel Navbar */}
+      {/* Mobile-Responsive Navbar */}
       <header className="border-b-4 border-blue-500 bg-black/95 backdrop-blur-sm sticky top-0 z-50 scanlines">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
@@ -334,9 +372,10 @@ export default function BasePetsPixelLanding() {
               <div className="w-8 h-8 bg-blue-600 pixel-border flex items-center justify-center">
                 <div className="w-4 h-4 bg-white" style={{ clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)" }}></div>
               </div>
-              <span className="text-lg text-blue-300 glitch">{glitchText}</span>
+              <span className="text-sm md:text-lg text-blue-300 glitch">{glitchText}</span>
             </div>
 
+            {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-6 text-xs">
               <Link href="#home" className="text-blue-300 hover:text-white transition-colors">
                 [HOME]
@@ -358,7 +397,8 @@ export default function BasePetsPixelLanding() {
               </Link>
             </nav>
 
-            <div className="flex items-center space-x-2">
+            {/* Desktop Social Links */}
+            <div className="hidden md:flex items-center space-x-2">
               <Link href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
                 <div className="w-6 h-6 bg-blue-400 pixel-border"></div>
               </Link>
@@ -370,21 +410,100 @@ export default function BasePetsPixelLanding() {
               </Link>
               <button className="pixel-button px-3 py-1 text-xs text-blue-400">[CONNECT]</button>
             </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden pixel-button p-2 text-blue-400"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            >
+              <div className="w-4 h-4 flex flex-col justify-center space-y-1">
+                <div className="w-full h-0.5 bg-current"></div>
+                <div className="w-full h-0.5 bg-current"></div>
+                <div className="w-full h-0.5 bg-current"></div>
+              </div>
+            </button>
           </div>
+
+          {/* Mobile Menu */}
+          {isMobileMenuOpen && (
+            <div className="md:hidden mt-4 pb-4 border-t-2 border-gray-700">
+              <nav className="flex flex-col space-y-3 text-xs mt-4">
+                <Link
+                  href="#home"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [HOME]
+                </Link>
+                <Link
+                  href="#about"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [ABOUT]
+                </Link>
+                <Link
+                  href="#pets"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [PETS]
+                </Link>
+                <Link
+                  href="#roadmap"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [ROADMAP]
+                </Link>
+                <Link
+                  href="#tokenomics"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [TOKENOMICS]
+                </Link>
+                <Link
+                  href="#team"
+                  className="text-blue-300 hover:text-white transition-colors py-2"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  [TEAM]
+                </Link>
+              </nav>
+
+              {/* Mobile Social Links */}
+              <div className="flex items-center justify-center space-x-3 mt-4 pt-4 border-t border-gray-700">
+                <Link href="#" className="text-blue-400 hover:text-blue-300 transition-colors">
+                  <div className="w-8 h-8 bg-blue-400 pixel-border"></div>
+                </Link>
+                <Link href="#" className="text-blue-500 hover:text-blue-300 transition-colors">
+                  <div className="w-8 h-8 bg-blue-500 pixel-border"></div>
+                </Link>
+                <Link href="#" className="text-blue-600 hover:text-blue-300 transition-colors">
+                  <div className="w-8 h-8 bg-blue-600 pixel-border"></div>
+                </Link>
+              </div>
+
+              <div className="mt-4 text-center">
+                <button className="pixel-button px-4 py-2 text-xs text-blue-400">[CONNECT WALLET]</button>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section id="home" className="py-16 px-4 scanlines crt-flicker">
+      {/* Mobile-Optimized Hero Section */}
+      <section id="home" className="py-8 md:py-16 px-4 scanlines crt-flicker">
         <div className="container mx-auto text-center">
-          <div className="mb-12">
-            <div className="inline-block bg-blue-600 text-white px-4 py-1 mb-6 pixel-border text-xs">
+          <div className="mb-8 md:mb-12">
+            <div className="inline-block bg-blue-600 text-white px-3 py-1 mb-4 md:mb-6 pixel-border text-xs">
               ★ NOW LIVE ON BASE NETWORK ★
             </div>
 
-            <h1 className="text-4xl md:text-6xl font-bold mb-6 text-blue-300">BASEPETS</h1>
+            <h1 className="text-3xl md:text-4xl lg:text-6xl font-bold mb-4 md:mb-6 text-blue-300">BASEPETS</h1>
 
-            <div className="text-xs md:text-sm text-blue-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+            <div className="text-xs md:text-sm text-blue-300 mb-6 md:mb-8 max-w-2xl mx-auto leading-relaxed px-4">
               &gt; COLLECT_RARE_PETS.EXE
               <br />
               &gt; TRADE_WITH_FRIENDS.BAT
@@ -395,41 +514,45 @@ export default function BasePetsPixelLanding() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button className="pixel-button px-6 py-3 text-xs text-blue-400 neon-glow">[ADOPT_PET_NOW]</button>
-            <button className="pixel-button px-6 py-3 text-xs text-white neon-glow">[VISIT_MARKET]</button>
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center mb-8 md:mb-16 px-4">
+            <button className="pixel-button px-4 md:px-6 py-2 md:py-3 text-xs text-blue-400 neon-glow">
+              [ADOPT_PET_NOW]
+            </button>
+            <button className="pixel-button px-4 md:px-6 py-2 md:py-3 text-xs text-white neon-glow">
+              [VISIT_MARKET]
+            </button>
           </div>
 
-          {/* Pixel Pet Showcase */}
-          <div className="max-w-4xl mx-auto">
-            <div className="pixel-card p-8 mb-8">
-              <div className="flex items-center justify-between mb-6">
-                <button onClick={prevPet} className="pixel-button p-2 text-blue-400">
+          {/* Mobile-Optimized Pet Showcase */}
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="pixel-card p-4 md:p-8 mb-6 md:mb-8">
+              <div className="flex items-center justify-between mb-4 md:mb-6">
+                <button onClick={prevPet} className="pixel-button p-2 text-blue-400 touch-manipulation">
                   <ArrowLeft className="w-4 h-4" />
                 </button>
 
                 <div className="text-center">
-                  <h3 className="text-sm text-blue-300 mb-2">&gt; FEATURED_PET.NFT</h3>
+                  <h3 className="text-xs md:text-sm text-blue-300 mb-2">&gt; FEATURED_PET.NFT</h3>
                   <div className="text-xs text-gray-400">
                     [{currentPet + 1}/{pixelPets.length}]
                   </div>
                 </div>
 
-                <button onClick={nextPet} className="pixel-button p-2 text-blue-400">
+                <button onClick={nextPet} className="pixel-button p-2 text-blue-400 touch-manipulation">
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
 
               <div className="relative">
                 <div
-                  className={`w-64 h-64 mx-auto pixel-border bg-gray-900 flex items-center justify-center pet-showcase pet-${pixelPets[currentPet].animation}`}
+                  className={`w-48 h-48 md:w-64 md:h-64 mx-auto pixel-border bg-gray-900 flex items-center justify-center pet-showcase pet-${pixelPets[currentPet].animation}`}
                 >
                   <Image
                     src={pixelPets[currentPet].image || "/placeholder.svg"}
                     alt={pixelPets[currentPet].name}
-                    width={200}
-                    height={200}
-                    className="pixelated"
+                    width={160}
+                    height={160}
+                    className="pixelated md:w-[200px] md:h-[200px]"
                     style={{
                       filter: `drop-shadow(0 0 10px ${pixelPets[currentPet].color})`,
                       imageRendering: "pixelated",
@@ -437,8 +560,10 @@ export default function BasePetsPixelLanding() {
                   />
                 </div>
 
-                <div className="mt-6 text-center">
-                  <h4 className="text-lg mb-2 text-blue-300">{pixelPets[currentPet].name.toUpperCase()}</h4>
+                <div className="mt-4 md:mt-6 text-center px-4">
+                  <h4 className="text-base md:text-lg mb-2 text-blue-300">
+                    {pixelPets[currentPet].name.toUpperCase()}
+                  </h4>
                   <div className="inline-block bg-blue-600 text-white px-3 py-1 text-xs pixel-border mb-3">
                     {pixelPets[currentPet].type.toUpperCase()}
                   </div>
@@ -449,13 +574,13 @@ export default function BasePetsPixelLanding() {
               </div>
             </div>
 
-            {/* Pet Slider Dots */}
-            <div className="flex justify-center space-x-2">
+            {/* Mobile-Friendly Pet Slider Dots */}
+            <div className="flex justify-center space-x-2 flex-wrap gap-2">
               {pixelPets.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentPet(index)}
-                  className={`w-3 h-3 pixel-border transition-colors ${
+                  className={`w-3 h-3 pixel-border transition-colors touch-manipulation ${
                     index === currentPet ? "bg-blue-500" : "bg-gray-600"
                   }`}
                 />
@@ -465,34 +590,36 @@ export default function BasePetsPixelLanding() {
         </div>
       </section>
 
-      {/* Pet Gallery Section */}
-      <section className="py-16 px-4 bg-gray-900/20">
+      {/* Mobile-Optimized Pet Gallery Section */}
+      <section className="py-8 md:py-16 px-4 bg-gray-900/20">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">&gt; PET_COLLECTION.DAT</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
+            &gt; PET_COLLECTION.DAT
+          </h2>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-6 max-w-7xl mx-auto px-4">
             {pixelPets.map((pet, index) => (
               <div
                 key={index}
-                className={`pixel-card p-4 text-center bg-gray-900/50 border-2 cursor-pointer transition-all hover:scale-105 ${
+                className={`pixel-card p-3 md:p-4 text-center bg-gray-900/50 border-2 cursor-pointer transition-all hover:scale-105 touch-manipulation ${
                   index === currentPet ? "border-blue-400" : "border-gray-600"
                 }`}
                 onClick={() => setCurrentPet(index)}
               >
-                <div className="w-20 h-20 mx-auto mb-3 flex items-center justify-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 mx-auto mb-2 md:mb-3 flex items-center justify-center">
                   <Image
                     src={pet.image || "/placeholder.svg"}
                     alt={pet.name}
-                    width={64}
-                    height={64}
-                    className="pixelated"
+                    width={48}
+                    height={48}
+                    className="pixelated md:w-16 md:h-16"
                     style={{
                       filter: `drop-shadow(0 0 5px ${pet.color})`,
                       imageRendering: "pixelated",
                     }}
                   />
                 </div>
-                <h4 className="text-xs text-blue-300 mb-1">{pet.name.toUpperCase()}</h4>
+                <h4 className="text-xs text-blue-300 mb-1 leading-tight">{pet.name.toUpperCase()}</h4>
                 <div className="text-xs text-gray-400">{pet.type}</div>
               </div>
             ))}
@@ -500,20 +627,22 @@ export default function BasePetsPixelLanding() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="py-16 px-4 bg-gray-900/20">
+      {/* Mobile-Optimized About Section */}
+      <section id="about" className="py-8 md:py-16 px-4 bg-gray-900/20">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">&gt; ABOUT_BASEPETS.TXT</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
+            &gt; ABOUT_BASEPETS.TXT
+          </h2>
 
-          <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6 md:gap-12">
             {/* Main Description */}
-            <div className="pixel-card p-8">
-              <h3 className="text-xl text-blue-400 mb-6 neon-glow flex items-center">
-                <Heart className="w-6 h-6 mr-2" />
+            <div className="pixel-card p-4 md:p-8">
+              <h3 className="text-lg md:text-xl text-blue-400 mb-4 md:mb-6 neon-glow flex items-center">
+                <Heart className="w-5 h-5 md:w-6 md:h-6 mr-2" />
                 PROJECT_OVERVIEW.DAT
               </h3>
 
-              <div className="space-y-4 text-xs text-gray-300 leading-relaxed">
+              <div className="space-y-3 md:space-y-4 text-xs text-gray-300 leading-relaxed">
                 <p className="text-content">
                   BasePets is the first pixel art animal NFT collection on Base Network that combines retro gaming
                   nostalgia with modern blockchain technology. Each pet has unique characteristics and can be used
@@ -532,9 +661,9 @@ export default function BasePetsPixelLanding() {
                 </p>
               </div>
 
-              <div className="mt-6 pt-6 border-t-2 border-gray-700">
+              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t-2 border-gray-700">
                 <h4 className="text-sm text-blue-400 mb-3">CORE_VALUES.SYS</h4>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
                   <div className="flex items-start space-x-2">
                     <span className="text-blue-400 text-xs">•</span>
                     <span className="text-xs text-gray-300">Community First</span>
@@ -555,11 +684,11 @@ export default function BasePetsPixelLanding() {
               </div>
             </div>
 
-            {/* Vision & Mission */}
-            <div className="space-y-8">
-              <div className="pixel-card p-6">
-                <h3 className="text-lg text-blue-400 mb-4 neon-glow flex items-center">
-                  <Target className="w-5 h-5 mr-2" />
+            {/* Vision & Mission - Mobile Stacked */}
+            <div className="space-y-6 md:space-y-8">
+              <div className="pixel-card p-4 md:p-6">
+                <h3 className="text-base md:text-lg text-blue-400 mb-3 md:mb-4 neon-glow flex items-center">
+                  <Target className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   MISSION.EXE
                 </h3>
                 <p className="text-xs text-gray-300 leading-relaxed text-content">
@@ -569,9 +698,9 @@ export default function BasePetsPixelLanding() {
                 </p>
               </div>
 
-              <div className="pixel-card p-6">
-                <h3 className="text-lg text-blue-400 mb-4 neon-glow flex items-center">
-                  <Zap className="w-5 h-5 mr-2" />
+              <div className="pixel-card p-4 md:p-6">
+                <h3 className="text-base md:text-lg text-blue-400 mb-3 md:mb-4 neon-glow flex items-center">
+                  <Zap className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   VISION.BAT
                 </h3>
                 <p className="text-xs text-gray-300 leading-relaxed text-content">
@@ -581,9 +710,9 @@ export default function BasePetsPixelLanding() {
                 </p>
               </div>
 
-              <div className="pixel-card p-6">
-                <h3 className="text-lg text-blue-400 mb-4 neon-glow flex items-center">
-                  <Users className="w-5 h-5 mr-2" />
+              <div className="pixel-card p-4 md:p-6">
+                <h3 className="text-base md:text-lg text-blue-400 mb-3 md:mb-4 neon-glow flex items-center">
+                  <Users className="w-4 h-4 md:w-5 md:h-5 mr-2" />
                   WHY_BASE.COM
                 </h3>
                 <div className="space-y-3">
@@ -620,108 +749,116 @@ export default function BasePetsPixelLanding() {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Key Features */}
-          <div className="mt-16">
-            <h3 className="text-xl text-center mb-8 text-blue-300">&gt; KEY_FEATURES.LOG</h3>
+        {/* Mobile-Optimized Key Features */}
+        <div className="mt-12 md:mt-16">
+          <h3 className="text-lg md:text-xl text-center mb-6 md:mb-8 text-blue-300">&gt; KEY_FEATURES.LOG</h3>
 
-            <div className="grid md:grid-cols-4 gap-6 max-w-6xl mx-auto">
-              <div className="pixel-card p-6 text-center bg-gray-900/50 border-blue-500">
-                <div className="w-12 h-12 bg-blue-500 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-lg">🎮</span>
-                </div>
-                <h4 className="text-sm text-blue-400 mb-2">RETRO_GAMING</h4>
-                <p className="text-xs text-gray-300 text-content">
-                  Authentic 8-bit pixel art with classic gaming nostalgia
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+            <div className="pixel-card p-4 md:p-6 text-center bg-gray-900/50 border-blue-500">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-500 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg">🎮</span>
               </div>
+              <h4 className="text-sm text-blue-400 mb-2">RETRO_GAMING</h4>
+              <p className="text-xs text-gray-300 text-content">
+                Authentic 8-bit pixel art with classic gaming nostalgia
+              </p>
+            </div>
 
-              <div className="pixel-card p-6 text-center bg-gray-900/50 border-blue-400">
-                <div className="w-12 h-12 bg-blue-400 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-lg">⚡</span>
-                </div>
-                <h4 className="text-sm text-blue-400 mb-2">BASE_NETWORK</h4>
-                <p className="text-xs text-gray-300 text-content">Fast & cheap transactions on leading blockchain</p>
+            <div className="pixel-card p-4 md:p-6 text-center bg-gray-900/50 border-blue-400">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-400 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg">⚡</span>
               </div>
+              <h4 className="text-sm text-blue-400 mb-2">BASE_NETWORK</h4>
+              <p className="text-xs text-gray-300 text-content">Fast & cheap transactions on leading blockchain</p>
+            </div>
 
-              <div className="pixel-card p-6 text-center bg-gray-900/50 border-blue-600">
-                <div className="w-12 h-12 bg-blue-600 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-lg">🎲</span>
-                </div>
-                <h4 className="text-sm text-blue-400 mb-2">PLAY_TO_EARN</h4>
-                <p className="text-xs text-gray-300 text-content">Gaming mechanics with real rewards and utility</p>
+            <div className="pixel-card p-4 md:p-6 text-center bg-gray-900/50 border-blue-600">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-600 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg">🎲</span>
               </div>
+              <h4 className="text-sm text-blue-400 mb-2">PLAY_TO_EARN</h4>
+              <p className="text-xs text-gray-300 text-content">Gaming mechanics with real rewards and utility</p>
+            </div>
 
-              <div className="pixel-card p-6 text-center bg-gray-900/50 border-blue-300">
-                <div className="w-12 h-12 bg-blue-300 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <span className="text-white text-lg">👥</span>
-                </div>
-                <h4 className="text-sm text-blue-400 mb-2">COMMUNITY</h4>
-                <p className="text-xs text-gray-300 text-content">Strong community with shared passion for pixel art</p>
+            <div className="pixel-card p-4 md:p-6 text-center bg-gray-900/50 border-blue-300">
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-300 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg">👥</span>
               </div>
+              <h4 className="text-sm text-blue-400 mb-2">COMMUNITY</h4>
+              <p className="text-xs text-gray-300 text-content">Strong community with shared passion for pixel art</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Grid */}
-      <section id="pets" className="py-16 px-4 bg-gray-900/20">
+      {/* Mobile-Optimized Features Grid */}
+      <section id="pets" className="py-8 md:py-16 px-4 bg-gray-900/20">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">&gt; SYSTEM_FEATURES.EXE</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
+            &gt; SYSTEM_FEATURES.EXE
+          </h2>
 
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
             <Card className="pixel-card bg-gray-900/50 border-blue-500">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-blue-500 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <Heart className="w-8 h-8 text-white" />
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-500 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                  <Heart className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <h3 className="text-sm text-blue-400 mb-3 neon-glow">NFT_ADOPTION.SYS</h3>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4 text-content">
+                <h3 className="text-sm text-blue-400 mb-2 md:mb-3 neon-glow">NFT_ADOPTION.SYS</h3>
+                <p className="text-xs text-gray-300 leading-relaxed mb-3 md:mb-4 text-content">
                   Adopt unique 8-bit pets with rare traits. Each NFT is procedurally generated with pixel-perfect
                   artwork.
                 </p>
-                <button className="pixel-button px-4 py-2 text-xs text-blue-400">[ADOPT_NOW]</button>
+                <button className="pixel-button px-3 md:px-4 py-2 text-xs text-blue-400 touch-manipulation">
+                  [ADOPT_NOW]
+                </button>
               </CardContent>
             </Card>
 
             <Card className="pixel-card bg-gray-900/50 border-blue-400">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-blue-400 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <ShoppingCart className="w-8 h-8 text-white" />
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-400 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                  <Dice6 className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <h3 className="text-sm text-blue-400 mb-3 neon-glow">MARKET_PLACE.EXE</h3>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4 text-content">
+                <h3 className="text-sm text-blue-400 mb-2 md:mb-3 neon-glow">MARKET_PLACE.EXE</h3>
+                <p className="text-xs text-gray-300 leading-relaxed mb-3 md:mb-4 text-content">
                   Trade your pixel pets with other collectors. Secure blockchain transactions on Base Network.
                 </p>
-                <button className="pixel-button px-4 py-2 text-xs text-blue-400">[TRADE_NOW]</button>
+                <button className="pixel-button px-3 md:px-4 py-2 text-xs text-blue-400 touch-manipulation">
+                  [TRADE_NOW]
+                </button>
               </CardContent>
             </Card>
 
             <Card className="pixel-card bg-gray-900/50 border-blue-600">
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-blue-600 pixel-border mx-auto mb-4 flex items-center justify-center">
-                  <Dice6 className="w-8 h-8 text-white" />
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-600 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
+                  <Dice6 className="w-6 h-6 md:w-8 md:h-8 text-white" />
                 </div>
-                <h3 className="text-sm text-blue-400 mb-3 neon-glow">PET_ROULETTE.BAT</h3>
-                <p className="text-xs text-gray-300 leading-relaxed mb-4 text-content">
+                <h3 className="text-sm text-blue-400 mb-2 md:mb-3 neon-glow">PET_ROULETTE.BAT</h3>
+                <p className="text-xs text-gray-300 leading-relaxed mb-3 md:mb-4 text-content">
                   Spin the pixel wheel to win rare pets and PETS tokens. Retro gaming meets DeFi rewards.
                 </p>
-                <button className="pixel-button px-4 py-2 text-xs text-blue-400">[PLAY_GAME]</button>
+                <button className="pixel-button px-3 md:px-4 py-2 text-xs text-blue-400 touch-manipulation">
+                  [PLAY_GAME]
+                </button>
               </CardContent>
             </Card>
           </div>
         </div>
       </section>
 
-      {/* Roadmap Section */}
-      <section id="roadmap" className="py-16 px-4 scanlines">
+      {/* Mobile-Optimized Roadmap Section */}
+      <section id="roadmap" className="py-8 md:py-16 px-4 scanlines">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
             &gt; DEVELOPMENT_ROADMAP.LOG
           </h2>
 
           <div className="max-w-6xl mx-auto">
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
               {roadmapPhases.map((phase, index) => (
                 <Card
                   key={index}
@@ -733,16 +870,16 @@ export default function BasePetsPixelLanding() {
                         : "border-gray-600"
                   }`}
                 >
-                  <CardContent className="p-6">
-                    <div className="flex items-center mb-4">
-                      <Calendar className="w-6 h-6 text-blue-400 mr-2" />
+                  <CardContent className="p-4 md:p-6">
+                    <div className="flex items-center mb-3 md:mb-4">
+                      <Calendar className="w-5 h-5 md:w-6 md:h-6 text-blue-400 mr-2" />
                       <span className="text-xs text-blue-300">{phase.phase}</span>
                     </div>
 
-                    <h3 className="text-sm text-blue-400 mb-4 neon-glow">{phase.title}</h3>
+                    <h3 className="text-sm text-blue-400 mb-3 md:mb-4 neon-glow leading-tight">{phase.title}</h3>
 
                     <div
-                      className={`text-xs px-2 py-1 mb-4 pixel-border inline-block ${
+                      className={`text-xs px-2 py-1 mb-3 md:mb-4 pixel-border inline-block ${
                         phase.status === "completed"
                           ? "bg-blue-600 text-white"
                           : phase.status === "current"
@@ -755,9 +892,9 @@ export default function BasePetsPixelLanding() {
 
                     <ul className="space-y-2">
                       {phase.items.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-xs text-gray-300 flex items-start">
-                          <span className="text-blue-400 mr-2">•</span>
-                          {item}
+                        <li key={itemIndex} className="text-xs text-gray-300 flex items-start leading-relaxed">
+                          <span className="text-blue-400 mr-2 flex-shrink-0">•</span>
+                          <span>{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -769,20 +906,22 @@ export default function BasePetsPixelLanding() {
         </div>
       </section>
 
-      {/* Tokenomics Section */}
-      <section id="tokenomics" className="py-16 px-4 bg-gray-900/20">
+      {/* Mobile-Optimized Tokenomics Section */}
+      <section id="tokenomics" className="py-8 md:py-16 px-4 bg-gray-900/20">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">&gt; TOKEN_ECONOMICS.SYS</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
+            &gt; TOKEN_ECONOMICS.SYS
+          </h2>
 
-          <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12">
+          <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-6 md:gap-12">
             {/* Token Distribution */}
-            <div className="pixel-card p-8">
-              <h3 className="text-xl text-blue-400 mb-6 neon-glow flex items-center">
-                <Coins className="w-6 h-6 mr-2" />
+            <div className="pixel-card p-4 md:p-8">
+              <h3 className="text-lg md:text-xl text-blue-400 mb-4 md:mb-6 neon-glow flex items-center">
+                <Coins className="w-5 h-5 md:w-6 md:h-6 mr-2" />
                 TOKEN_DISTRIBUTION.DAT
               </h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 md:space-y-4">
                 {tokenomics.map((item, index) => (
                   <div key={index} className="space-y-2">
                     <div className="flex justify-between items-center">
@@ -803,22 +942,22 @@ export default function BasePetsPixelLanding() {
                 ))}
               </div>
 
-              <div className="mt-6 pt-6 border-t-2 border-gray-700">
+              <div className="mt-4 md:mt-6 pt-4 md:pt-6 border-t-2 border-gray-700">
                 <div className="text-center">
-                  <div className="text-lg text-blue-300 mb-2">TOTAL_SUPPLY</div>
-                  <div className="text-2xl font-bold text-white">1,000,000,000 PETS</div>
+                  <div className="text-base md:text-lg text-blue-300 mb-2">TOTAL_SUPPLY</div>
+                  <div className="text-xl md:text-2xl font-bold text-white">1,000,000,000 PETS</div>
                 </div>
               </div>
             </div>
 
             {/* Token Utility */}
-            <div className="pixel-card p-8">
-              <h3 className="text-xl text-blue-400 mb-6 neon-glow flex items-center">
-                <Target className="w-6 h-6 mr-2" />
+            <div className="pixel-card p-4 md:p-8">
+              <h3 className="text-lg md:text-xl text-blue-400 mb-4 md:mb-6 neon-glow flex items-center">
+                <Target className="w-5 h-5 md:w-6 md:h-6 mr-2" />
                 TOKEN_UTILITY.EXE
               </h3>
 
-              <div className="space-y-6">
+              <div className="space-y-4 md:space-y-6">
                 <div className="flex items-start space-x-3">
                   <div className="w-8 h-8 bg-blue-500 pixel-border flex items-center justify-center flex-shrink-0">
                     <Heart className="w-4 h-4 text-white" />
@@ -872,15 +1011,17 @@ export default function BasePetsPixelLanding() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section id="team" className="py-16 px-4 scanlines">
+      {/* Mobile-Optimized Team Section */}
+      <section id="team" className="py-8 md:py-16 px-4 scanlines">
         <div className="container mx-auto">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-blue-300">&gt; CORE_TEAM.DAT</h2>
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-center mb-8 md:mb-12 text-blue-300 px-4">
+            &gt; CORE_TEAM.DAT
+          </h2>
 
-          <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
+          <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             <Card className="pixel-card bg-gray-900/50 border-blue-500">
-              <CardContent className="p-6 text-center">
-                <div className="w-20 h-20 bg-blue-500 pixel-border mx-auto mb-4 flex items-center justify-center">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-blue-500 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
                   <Image
                     src="/placeholder.svg?height=60&width=60"
                     alt="Lead Developer"
@@ -890,7 +1031,7 @@ export default function BasePetsPixelLanding() {
                   />
                 </div>
                 <h3 className="text-sm text-blue-400 mb-2 neon-glow">LEAD_DEVELOPER</h3>
-                <p className="text-xs text-gray-300 mb-3">Alex Chen</p>
+                <p className="text-xs text-gray-300 mb-2 md:mb-3">Alex Chen</p>
                 <p className="text-xs text-gray-400 leading-relaxed text-content">
                   10+ years blockchain development. Former Ethereum core contributor.
                 </p>
@@ -898,8 +1039,8 @@ export default function BasePetsPixelLanding() {
             </Card>
 
             <Card className="pixel-card bg-gray-900/50 border-blue-400">
-              <CardContent className="p-6 text-center">
-                <div className="w-20 h-20 bg-blue-400 pixel-border mx-auto mb-4 flex items-center justify-center">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-blue-400 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
                   <Image
                     src="/placeholder.svg?height=60&width=60"
                     alt="Art Director"
@@ -909,7 +1050,7 @@ export default function BasePetsPixelLanding() {
                   />
                 </div>
                 <h3 className="text-sm text-blue-400 mb-2 neon-glow">ART_DIRECTOR</h3>
-                <p className="text-xs text-gray-300 mb-3">Maya Rodriguez</p>
+                <p className="text-xs text-gray-300 mb-2 md:mb-3">Maya Rodriguez</p>
                 <p className="text-xs text-gray-400 leading-relaxed text-content">
                   Award-winning pixel artist. Created art for major gaming studios.
                 </p>
@@ -917,8 +1058,8 @@ export default function BasePetsPixelLanding() {
             </Card>
 
             <Card className="pixel-card bg-gray-900/50 border-blue-600">
-              <CardContent className="p-6 text-center">
-                <div className="w-20 h-20 bg-blue-600 pixel-border mx-auto mb-4 flex items-center justify-center">
+              <CardContent className="p-4 md:p-6 text-center">
+                <div className="w-16 h-16 md:w-20 md:h-20 bg-blue-600 pixel-border mx-auto mb-3 md:mb-4 flex items-center justify-center">
                   <Image
                     src="/placeholder.svg?height=60&width=60"
                     alt="Community Manager"
@@ -928,7 +1069,7 @@ export default function BasePetsPixelLanding() {
                   />
                 </div>
                 <h3 className="text-sm text-blue-400 mb-2 neon-glow">COMMUNITY_LEAD</h3>
-                <p className="text-xs text-gray-300 mb-3">Jordan Kim</p>
+                <p className="text-xs text-gray-300 mb-2 md:mb-3">Jordan Kim</p>
                 <p className="text-xs text-gray-400 leading-relaxed text-content">
                   Built communities for top NFT projects. Expert in Web3 marketing.
                 </p>
@@ -938,15 +1079,15 @@ export default function BasePetsPixelLanding() {
         </div>
       </section>
 
-      {/* Bouncing Pet Corner */}
+      {/* Mobile-Optimized Bouncing Pet Corner */}
       <div className="fixed bottom-4 right-4 z-40">
-        <div className="w-16 h-16 pet-bounce">
+        <div className="w-12 h-12 md:w-16 md:h-16 pet-bounce">
           <Image
             src="/images/pets/classic-dog.png"
             alt="Bouncing Pet"
-            width={64}
-            height={64}
-            className="pixelated"
+            width={48}
+            height={48}
+            className="pixelated md:w-16 md:h-16"
             style={{
               filter: "drop-shadow(0 0 10px #0066FF)",
               imageRendering: "pixelated",
@@ -955,11 +1096,11 @@ export default function BasePetsPixelLanding() {
         </div>
       </div>
 
-      {/* Glitch Footer */}
-      <footer className="border-t-4 border-blue-500 bg-black py-12 px-4 scanlines">
+      {/* Mobile-Optimized Footer */}
+      <footer className="border-t-4 border-blue-500 bg-black py-8 md:py-12 px-4 scanlines">
         <div className="container mx-auto">
-          <div className="text-center mb-8">
-            <div className="text-lg text-blue-300 glitch mb-4">BASEPETS_TERMINAL_V1.0</div>
+          <div className="text-center mb-6 md:mb-8">
+            <div className="text-base md:text-lg text-blue-300 glitch mb-4">BASEPETS_TERMINAL_V1.0</div>
             <div className="text-xs text-gray-400 font-mono">
               &gt; CONNECTION_ESTABLISHED
               <br />
@@ -971,9 +1112,9 @@ export default function BasePetsPixelLanding() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
             <div>
-              <h4 className="text-sm text-blue-300 mb-4">[SOCIAL_LINKS]</h4>
+              <h4 className="text-sm text-blue-300 mb-3 md:mb-4">[SOCIAL_LINKS]</h4>
               <div className="space-y-2 text-xs">
                 <div className="text-gray-400 hover:text-blue-400 cursor-pointer transition-colors">
                   &gt; TWITTER.COM/BASEPETS
@@ -988,7 +1129,7 @@ export default function BasePetsPixelLanding() {
             </div>
 
             <div>
-              <h4 className="text-sm text-blue-400 mb-4">[SYSTEM_INFO]</h4>
+              <h4 className="text-sm text-blue-400 mb-3 md:mb-4">[SYSTEM_INFO]</h4>
               <div className="space-y-2 text-xs text-gray-400">
                 <div>&gt; NETWORK: BASE_MAINNET</div>
                 <div>&gt; CONTRACT: 0x...PETS</div>
@@ -997,7 +1138,7 @@ export default function BasePetsPixelLanding() {
             </div>
 
             <div>
-              <h4 className="text-sm text-blue-500 mb-4">[DOCUMENTATION]</h4>
+              <h4 className="text-sm text-blue-500 mb-3 md:mb-4">[DOCUMENTATION]</h4>
               <div className="space-y-2 text-xs text-gray-400">
                 <div className="hover:text-blue-400 cursor-pointer transition-colors">&gt; WHITEPAPER.PDF</div>
                 <div className="hover:text-blue-400 cursor-pointer transition-colors">&gt; API_DOCS.HTML</div>
@@ -1006,7 +1147,7 @@ export default function BasePetsPixelLanding() {
             </div>
 
             <div>
-              <h4 className="text-sm text-blue-600 mb-4">[SECURITY]</h4>
+              <h4 className="text-sm text-blue-600 mb-3 md:mb-4">[SECURITY]</h4>
               <div className="space-y-2 text-xs text-gray-400">
                 <div className="hover:text-blue-400 cursor-pointer transition-colors">&gt; AUDIT_REPORT.PDF</div>
                 <div className="hover:text-blue-400 cursor-pointer transition-colors">&gt; BUG_BOUNTY.HTML</div>
@@ -1015,7 +1156,7 @@ export default function BasePetsPixelLanding() {
             </div>
           </div>
 
-          <div className="border-t-2 border-gray-700 mt-8 pt-8 text-center">
+          <div className="border-t-2 border-gray-700 mt-6 md:mt-8 pt-6 md:pt-8 text-center">
             <div className="text-xs text-gray-500 glitch">
               © 2025 BASEPETS.EXE - ALL_RIGHTS_RESERVED - BUILT_WITH_&lt;3_ON_BASE
             </div>
